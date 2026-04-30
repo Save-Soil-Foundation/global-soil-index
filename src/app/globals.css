@@ -55,6 +55,13 @@ button {
     -0.5px 0 0 rgba(0, 0, 0, 0.25);
 }
 
+.gsi-wordmark {
+  font-family: "Hackney", sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  line-height: 0.9;
+}
+
 @media (min-width: 1280px) {
   .gsi-page-padding {
     padding: 20px;
