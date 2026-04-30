@@ -7,10 +7,11 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL("https://globalsoilindex.org"),
   title: "Global Soil Index (GSI) | Ranking 196 Countries by Soil Health",
   description:
-    "The Global Soil Index ranks 196 countries based on soil health, transparency, and policy action. A volunteer-driven initiative aligned with the Save Soil movement.",
+    "The Global Soil Index ranks 196 countries based on soil health, transparency, and policy action. A volunteer-driven global soil data initiative.",
   keywords: [
     "Global Soil Index",
     "Soil health ranking",
@@ -22,6 +23,9 @@ export const metadata = {
     "Environmental index",
   ],
   authors: [{ name: "Global Soil Index Initiative" }],
+  alternates: {
+    canonical: "https://globalsoilindex.org",
+  },
   openGraph: {
     title: "Global Soil Index",
     description:
@@ -30,12 +34,20 @@ export const metadata = {
     siteName: "Global Soil Index",
     images: [
       {
-        url: "/assets/earth-hero.jpg",
+        url: "/og-dashboard.jpg",
         width: 1200,
         height: 630,
+        alt: "Global Soil Index dashboard preview",
       },
     ],
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Global Soil Index",
+    description:
+      "Ranking countries by soil health and accountability. Transparent, data-driven, and global.",
+    images: ["/og-dashboard.jpg"],
   },
 };
 
