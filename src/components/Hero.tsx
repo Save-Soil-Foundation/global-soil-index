@@ -72,7 +72,7 @@ export function Hero() {
         {/* Actions */}
         <div className="flex flex-wrap gap-3 lg:shrink-0">
           <button className="flex h-9 cursor-pointer items-center gap-2 rounded-md border gsi-border px-3 text-xs transition hover:bg-white/5">
-            <Calendar size={15} /> 2024
+            <Calendar size={15} /> 2026
           </button>
 
           <button className="flex h-9 cursor-pointer items-center gap-2 rounded-md border gsi-border px-3 text-xs transition hover:bg-white/5">
