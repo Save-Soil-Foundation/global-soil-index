@@ -10,78 +10,70 @@ import {
   Sprout,
   X,
 } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 const navItems = [
-  ["Country Rankings", Globe2],
-  ["Compare Countries", BarChart3],
-  ["Soil Health Map", Map],
-  ["Indicators", BarChart3],
-  ["Trends", BarChart3],
-  ["Policy Tracker", BookOpen],
-  ["Methodology", BookOpen],
-  ["Resources", BookOpen],
-  ["Reports", BookOpen],
-  ["About GSI", Info],
+  { label: "Overview", href: "#overview", Icon: BarChart3 },
+  { label: "Country rankings", href: "#rankings", Icon: Globe2 },
+  { label: "Soil health map", href: "#health-map", Icon: Map },
+  { label: "Methodology", href: "#methodology", Icon: BookOpen },
+  { label: "About the index", href: "#about", Icon: Info },
 ];
 
-function SidebarContent() {
+function Brand() {
   return (
-    <>
-      {/* Wordmark Branding */}
+    <Link href="#overview" className="flex items-center gap-3" aria-label="Global Soil Index home">
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-[#b7e43b] text-[#10241c]">
+        <Sprout size={23} strokeWidth={2.2} />
+      </div>
       <div>
-        <div className="gsi-wordmark text-lg">
-          Global <span className="text-lime-400">Soil</span> Index
+        <div className="gsi-display text-[17px] leading-none text-white">
+          Global Soil Index
         </div>
-
-        <div className="mt-2 text-[11px] leading-tight text-white/70">
-          A global soil data initiative focused on transparency, accountability,
-          and regeneration.
-        </div>
-
-        <div className="mt-2 text-[10px] text-lime-300">
-          ● Open • Transparent • Global
+        <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-white/45">
+          Independent benchmark
         </div>
       </div>
+    </Link>
+  );
+}
+function SidebarContent({ close }: { close?: () => void }) {
+  return (
+    <div className="flex h-full flex-col">
+      <Brand />
 
-      {/* Navigation */}
-      <nav className="mt-7 space-y-1.5 text-[13px]">
-        {navItems.map(([label, Icon], index) => {
-          const IconComponent = Icon as typeof Globe2;
-
-          return (
-            <div
-              key={label as string}
-              className={`flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 transition ${
-                index === 0
-                  ? "border-l-4 border-lime-400 bg-lime-400/10 text-lime-300"
-                  : "text-white/80 hover:bg-white/5 hover:text-white"
-              }`}
-            >
-              <IconComponent size={16} />
-              {label as string}
-            </div>
-          );
-        })}
+      <nav className="mt-10 space-y-1" aria-label="Primary navigation">
+        {navItems.map(({ label, href, Icon }, index) => (
+          <Link
+            key={label}
+            href={href}
+            onClick={close}
+            className={`group flex min-h-11 items-center gap-3 rounded-md px-3 text-[13px] font-medium transition ${
+              index === 0
+                ? "bg-white/10 text-white"
+                : "text-white/60 hover:bg-white/6 hover:text-white"
+            }`}
+          >
+            <Icon
+              size={17}
+              className={index === 0 ? "text-[#b7e43b]" : "text-white/45 group-hover:text-[#b7e43b]"}
+            />
+            {label}
+          </Link>
+        ))}
       </nav>
 
-      {/* CTA Card */}
-      <div className="gsi-card mt-7 p-4 text-center">
-        <Sprout className="mx-auto text-lime-300" size={38} />
-
-        <h3 className="mt-3 text-base font-bold">
-          Healthy Soil. Secure Future.
-        </h3>
-
-        <p className="mt-2 text-xs leading-relaxed text-white/70">
-          Restore soil health for people and the planet.
+      <div className="mt-auto border-t border-white/10 pt-5">
+        <div className="flex items-center gap-2 text-xs font-semibold text-white/70">
+          <span className="size-2 rounded-full bg-[#b7e43b]" />
+          2026 prototype edition
+        </div>
+        <p className="mt-2 text-[11px] leading-5 text-white/42">
+          Open methodology. Transparent sources. Built for accountability.
         </p>
-
-        <button className="mt-4 w-full cursor-pointer rounded-md border border-lime-400 py-2 text-xs text-lime-300 transition hover:bg-lime-400/10">
-          Learn More →
-        </button>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -90,48 +82,42 @@ export function Sidebar() {
 
   return (
     <>
-      {/* Mobile Header */}
-      <header className="fixed left-0 right-0 top-0 z-50 flex items-center justify-between border-b gsi-border bg-[#031426]/95 px-4 py-3 backdrop-blur lg:hidden">
-        <div>
-          <div className="gsi-wordmark text-sm">
-            Global <span className="text-lime-400">Soil</span> Index
-          </div>
-          <div className="text-xs text-lime-300">
-            Ranking 196 Countries
-          </div>
-        </div>
-
+      <header className="fixed inset-x-0 top-0 z-50 flex h-16 items-center justify-between border-b border-black/10 bg-[#10241c]/96 px-4 backdrop-blur lg:hidden">
+        <Brand />
         <button
+          type="button"
           onClick={() => setIsOpen(true)}
-          className="cursor-pointer rounded-md border gsi-border p-2 transition hover:bg-white/5"
+          className="flex size-10 items-center justify-center rounded-md border border-white/15 text-white"
+          aria-label="Open navigation"
+          aria-expanded={isOpen}
         >
           <Menu size={20} />
         </button>
       </header>
 
-      {/* Mobile Drawer */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div className="fixed inset-0 z-[60] lg:hidden">
           <button
-            className="absolute inset-0 cursor-pointer bg-black/60"
+            type="button"
+            className="absolute inset-0 bg-black/55"
             onClick={() => setIsOpen(false)}
+            aria-label="Close navigation"
           />
-
-          <aside className="relative h-full w-[300px] overflow-y-auto bg-[#031426] p-5">
+          <aside className="relative h-full w-[min(310px,86vw)] bg-[#10241c] p-5 shadow-2xl">
             <button
+              type="button"
               onClick={() => setIsOpen(false)}
-              className="mb-5 ml-auto flex cursor-pointer rounded-md border gsi-border p-2 transition hover:bg-white/5"
+              className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-md border border-white/15 text-white"
+              aria-label="Close navigation"
             >
               <X size={18} />
             </button>
-
-            <SidebarContent />
+            <SidebarContent close={() => setIsOpen(false)} />
           </aside>
         </div>
       )}
 
-      {/* Desktop Sidebar */}
-      <aside className="hidden w-[250px] shrink-0 bg-[#031426] p-5 lg:block">
+      <aside className="sticky top-0 hidden h-screen w-[238px] shrink-0 bg-[#10241c] p-5 lg:block">
         <SidebarContent />
       </aside>
     </>

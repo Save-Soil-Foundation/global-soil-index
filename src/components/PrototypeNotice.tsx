@@ -1,16 +1,18 @@
-import { Info } from "lucide-react";
+import { Beaker, CalendarDays } from "lucide-react";
 
 export function PrototypeNotice() {
   return (
-    <div className="mt-4 flex items-start gap-3 rounded-lg border border-yellow-400/25 bg-yellow-400/10 px-4 py-3 text-xs text-yellow-100">
-      <Info className="mt-0.5 shrink-0 text-yellow-300" size={16} />
-
-      <p className="leading-relaxed">
-        <span className="font-semibold text-yellow-200">Prototype Data — </span>
-        This dashboard currently uses demonstration data for proof of concept.
-        Real-time dataset will be released with the official
-        launch of our Global Save Soil Index portal on World Soil Day - Dec 5 2026.
-      </p>
+    <div className="mt-4 flex flex-col gap-3 rounded-lg border border-[#d9dfbd] bg-[#fbfdeb] px-4 py-3 text-[#394027] sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex items-start gap-3">
+        <Beaker className="mt-0.5 shrink-0 text-[#58741f]" size={18} />
+        <p className="text-xs leading-5 sm:text-sm">
+          <span className="font-bold">Prototype dataset.</span> Rankings are
+          illustrative while the verified global dataset is under review.
+        </p>
+      </div>
+      <div className="flex shrink-0 items-center gap-2 pl-7 text-xs font-semibold text-[#58741f] sm:pl-0">
+        <CalendarDays size={15} /> Launching 5 Dec 2026
+      </div>
     </div>
   );
 }

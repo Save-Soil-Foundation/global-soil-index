@@ -5,86 +5,104 @@
   src: url("/fonts/Hackney.ttf") format("truetype");
   font-display: swap;
 }
-
 :root {
-  --gsi-bg: #031426;
-  --gsi-panel: #061f3a;
-  --gsi-panel-dark: #04182d;
-  --gsi-border: rgba(94, 177, 255, 0.25);
-  --gsi-green: #8ee234;
-  --gsi-white: #e6eef7;
+  --gsi-ink: #14201b;
+  --gsi-muted: #64716a;
+  --gsi-canvas: #f2f5f1;
+  --gsi-surface: #ffffff;
+  --gsi-sidebar: #10241c;
+  --gsi-border: #dce4dd;
+  --gsi-accent: #b7e43b;
+  --gsi-accent-dark: #466b16;
+  --gsi-blue: #1d5d75;
 }
 
 * {
   box-sizing: border-box;
 }
 
-html,
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  background: var(--gsi-bg);
-  color: var(--gsi-white);
+  background: var(--gsi-canvas);
+  color: var(--gsi-ink);
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
-button {
+button,
+select,
+input {
+  font: inherit;
+}
+
+button,
+select {
   cursor: pointer;
 }
 
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(183, 228, 59, 0.55);
+  outline-offset: 2px;
+}
+
 .gsi-card {
-  background: linear-gradient(180deg,
-      rgba(8, 42, 76, 0.92),
-      rgba(3, 22, 42, 0.96));
+  background: var(--gsi-surface);
   border: 1px solid var(--gsi-border);
-  border-radius: 14px;
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(16, 36, 28, 0.05);
 }
 
-.gsi-border {
-  border-color: var(--gsi-border);
-}
-
-.gsi-heading {
-  font-family: "Hackney", sans-serif;
+.gsi-display {
+  font-family: "Hackney", var(--font-inter), sans-serif;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  transform: scaleY(0.95);
-  filter: contrast(1.08);
-  text-shadow:
-    0.5px 0 0 rgba(255, 255, 255, 0.08),
-    -0.5px 0 0 rgba(0, 0, 0, 0.25);
 }
 
-.gsi-wordmark {
-  font-family: "Hackney", sans-serif;
+.gsi-kicker {
+  color: var(--gsi-accent-dark);
+  font-size: 0.6875rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: 2.5px;
-  line-height: 0.9;
 }
 
-@media (min-width: 1280px) {
-  .gsi-page-padding {
-    padding: 20px;
+.gsi-control {
+  min-height: 42px;
+  border: 1px solid var(--gsi-border);
+  border-radius: 6px;
+  background: #fff;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.gsi-control:hover {
+  border-color: #b5c2b8;
+}
+
+.gsi-control:focus-within {
+  border-color: #739c2e;
+  box-shadow: 0 0 0 3px rgba(115, 156, 46, 0.12);
+}
+
+::selection {
+  background: #d8f58d;
+  color: #10241c;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 
-  .gsi-section-gap {
-    gap: 18px;
-  }
-
-  .gsi-section-mt {
-    margin-top: 18px;
-  }
-
-  .gsi-card-padding {
-    padding: 16px;
-  }
-
-  .gsi-table-cell {
-    padding: 9px 16px;
-  }
-
-  .gsi-hero-title {
-    font-size: 52px;
-    line-height: 0.9;
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }
