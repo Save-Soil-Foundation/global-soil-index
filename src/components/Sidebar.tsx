@@ -2,124 +2,189 @@
 
 import {
   BarChart3,
-  BookOpen,
+  Braces,
+  ChevronRight,
   Globe2,
   Info,
-  Map,
+  Layers3,
+  Leaf,
+  LineChart,
   Menu,
-  Sprout,
-  X,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { usePathname } from "next/navigation";
+import { Button, buttonVariants } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Overview", href: "#overview", Icon: BarChart3 },
-  { label: "Country rankings", href: "#rankings", Icon: Globe2 },
-  { label: "Soil health map", href: "#health-map", Icon: Map },
-  { label: "Methodology", href: "#methodology", Icon: BookOpen },
-  { label: "About the index", href: "#about", Icon: Info },
+  { label: "Rankings", href: "/", icon: BarChart3 },
+  { label: "Methodology", href: "/methodology", icon: Layers3 },
+  { label: "Insights", href: "/insights", icon: LineChart },
+  { label: "About", href: "/about", icon: Info },
 ];
 
 function Brand() {
   return (
-    <Link href="#overview" className="flex items-center gap-3" aria-label="Global Soil Index home">
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-[#b7e43b] text-[#10241c]">
-        <Sprout size={23} strokeWidth={2.2} />
+    <Link href="/" className="flex items-center gap-3" aria-label="Soil Index home">
+      <div className="relative flex size-9 items-center justify-center rounded-full border border-[#79bd45]/55 bg-[#79bd45]/5 text-[#79bd45] shadow-[inset_0_0_18px_rgba(121,189,69,0.08)]">
+        <Leaf size={19} />
       </div>
       <div>
-        <div className="gsi-display text-[17px] leading-none text-white">
-          Global Soil Index
+        <div className="text-[19px] font-light uppercase leading-none tracking-[0.12em] text-white sm:text-[22px]">
+          <span className="font-extrabold">Soil</span> Index
         </div>
-        <div className="mt-1 text-[10px] font-semibold uppercase tracking-[0.1em] text-white/45">
-          Independent benchmark
+        <div className="mt-1 hidden text-[8px] font-medium uppercase tracking-[0.18em] text-white/48 sm:block">
+          Global soil health intelligence
         </div>
       </div>
     </Link>
   );
 }
-function SidebarContent({ close }: { close?: () => void }) {
-  return (
-    <div className="flex h-full flex-col">
-      <Brand />
-
-      <nav className="mt-10 space-y-1" aria-label="Primary navigation">
-        {navItems.map(({ label, href, Icon }, index) => (
-          <Link
-            key={label}
-            href={href}
-            onClick={close}
-            className={`group flex min-h-11 items-center gap-3 rounded-md px-3 text-[13px] font-medium transition ${
-              index === 0
-                ? "bg-white/10 text-white"
-                : "text-white/60 hover:bg-white/6 hover:text-white"
-            }`}
-          >
-            <Icon
-              size={17}
-              className={index === 0 ? "text-[#b7e43b]" : "text-white/45 group-hover:text-[#b7e43b]"}
-            />
-            {label}
-          </Link>
-        ))}
-      </nav>
-
-      <div className="mt-auto border-t border-white/10 pt-5">
-        <div className="flex items-center gap-2 text-xs font-semibold text-white/70">
-          <span className="size-2 rounded-full bg-[#b7e43b]" />
-          2026 prototype edition
-        </div>
-        <p className="mt-2 text-[11px] leading-5 text-white/42">
-          Open methodology. Transparent sources. Built for accountability.
-        </p>
-      </div>
-    </div>
-  );
-}
 
 export function Sidebar() {
-  const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
-    <>
-      <header className="fixed inset-x-0 top-0 z-50 flex h-16 items-center justify-between border-b border-black/10 bg-[#10241c]/96 px-4 backdrop-blur lg:hidden">
-        <Brand />
-        <button
-          type="button"
-          onClick={() => setIsOpen(true)}
-          className="flex size-10 items-center justify-center rounded-md border border-white/15 text-white"
-          aria-label="Open navigation"
-          aria-expanded={isOpen}
-        >
-          <Menu size={20} />
-        </button>
-      </header>
+    <TooltipProvider delayDuration={250}>
+      <header className="sticky top-0 z-50 border-b border-white/10 bg-[#060c0f]/95 backdrop-blur-xl">
+        <div className="mx-auto flex h-[72px] max-w-[1600px] items-center justify-between px-4 sm:px-6 lg:px-8">
+          <Brand />
 
-      {isOpen && (
-        <div className="fixed inset-0 z-[60] lg:hidden">
-          <button
-            type="button"
-            className="absolute inset-0 bg-black/55"
-            onClick={() => setIsOpen(false)}
-            aria-label="Close navigation"
-          />
-          <aside className="relative h-full w-[min(310px,86vw)] bg-[#10241c] p-5 shadow-2xl">
-            <button
-              type="button"
-              onClick={() => setIsOpen(false)}
-              className="absolute right-4 top-4 flex size-9 items-center justify-center rounded-md border border-white/15 text-white"
-              aria-label="Close navigation"
+          <nav className="hidden h-full items-center gap-7 lg:flex" aria-label="Primary navigation">
+            {navItems.map((item) => {
+              const active = pathname === item.href;
+
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  aria-current={active ? "page" : undefined}
+                  className={cn(
+                    "relative flex h-full items-center px-0.5 text-xs font-semibold uppercase text-white/62 transition hover:text-white",
+                    active && "text-[#a8df72]"
+                  )}
+                >
+                  {item.label}
+                  <span
+                    className={cn(
+                      "absolute inset-x-0 bottom-0 h-0.5 origin-center bg-[#79bd45] transition-transform",
+                      active ? "scale-x-100" : "scale-x-0"
+                    )}
+                  />
+                </Link>
+              );
+            })}
+
+            <Link
+              href="/data-api"
+              aria-current={pathname === "/data-api" ? "page" : undefined}
+              className={cn(
+                buttonVariants({ variant: pathname === "/data-api" ? "secondary" : "outline", size: "sm" }),
+                "ml-1 uppercase"
+              )}
             >
-              <X size={18} />
-            </button>
-            <SidebarContent close={() => setIsOpen(false)} />
-          </aside>
-        </div>
-      )}
+              <Braces size={15} /> Data API
+            </Link>
 
-      <aside className="sticky top-0 hidden h-screen w-[238px] shrink-0 bg-[#10241c] p-5 lg:block">
-        <SidebarContent />
-      </aside>
-    </>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href="/map"
+                  aria-label="Open soil health map"
+                  aria-current={pathname === "/map" ? "page" : undefined}
+                  className={cn(
+                    buttonVariants({ variant: "ghost", size: "icon" }),
+                    pathname === "/map" && "bg-[#79bd45]/10 text-[#a8df72]"
+                  )}
+                >
+                  <Globe2 size={19} />
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="bottom">Open soil health map</TooltipContent>
+            </Tooltip>
+          </nav>
+
+          <Sheet>
+            <SheetTrigger asChild>
+              <Button variant="outline" size="icon" className="lg:hidden" aria-label="Open navigation">
+                <Menu size={20} />
+              </Button>
+            </SheetTrigger>
+            <SheetContent>
+              <SheetTitle className="sr-only">Site navigation</SheetTitle>
+              <SheetDescription className="sr-only">
+                Navigate between Soil Index data views.
+              </SheetDescription>
+
+              <SheetClose asChild>
+                <div className="pr-12">
+                  <Brand />
+                </div>
+              </SheetClose>
+
+              <div className="mt-8 grid grid-cols-2 border-y border-white/10 py-4">
+                <div>
+                  <div className="text-xl font-light tabular-nums text-white">196</div>
+                  <div className="mt-1 text-[9px] font-semibold uppercase text-white/34">Countries</div>
+                </div>
+                <div className="border-l border-white/10 pl-5">
+                  <div className="flex items-center gap-2 text-xl font-light text-[#98d75d]">
+                    <span className="size-2 rounded-full bg-[#79bd45]" /> Live
+                  </div>
+                  <div className="mt-1 text-[9px] font-semibold uppercase text-white/34">Market model</div>
+                </div>
+              </div>
+
+              <nav className="mt-6 space-y-1" aria-label="Mobile navigation">
+                {[...navItems, { label: "Soil map", href: "/map", icon: Globe2 }].map((item) => {
+                  const active = pathname === item.href;
+                  const ItemIcon = item.icon;
+
+                  return (
+                    <SheetClose asChild key={item.label}>
+                      <Link
+                        href={item.href}
+                        aria-current={active ? "page" : undefined}
+                        className={cn(
+                          "flex min-h-12 items-center gap-3 rounded-md px-3 text-sm font-semibold text-white/68 transition hover:bg-white/[0.05] hover:text-white",
+                          active && "bg-[#79bd45]/10 text-[#b5e77f]"
+                        )}
+                      >
+                        <ItemIcon size={18} className={active ? "text-[#8fd157]" : "text-white/38"} />
+                        <span>{item.label}</span>
+                        <ChevronRight size={16} className="ml-auto text-white/24" />
+                      </Link>
+                    </SheetClose>
+                  );
+                })}
+              </nav>
+
+              <SheetClose asChild>
+                <Link
+                  href="/data-api"
+                  className={cn(buttonVariants({ variant: "secondary", size: "lg" }), "mt-auto w-full")}
+                >
+                  <Braces size={17} /> Explore Data API
+                </Link>
+              </SheetClose>
+            </SheetContent>
+          </Sheet>
+        </div>
+      </header>
+    </TooltipProvider>
   );
 }

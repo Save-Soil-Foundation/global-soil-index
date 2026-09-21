@@ -1,9 +1,4 @@
-import {
-  Database,
-  Gauge,
-  Scale,
-  ShieldCheck,
-} from "lucide-react";
+import { Database, Gauge, Scale, ShieldCheck } from "lucide-react";
 
 const principles = [
   {
@@ -21,7 +16,7 @@ const principles = [
   {
     number: "03",
     title: "Compare",
-    text: "A consistent framework makes country-level performance comparable over time.",
+    text: "A consistent framework makes country performance comparable over time.",
     Icon: Scale,
   },
   {
@@ -34,42 +29,32 @@ const principles = [
 
 export function AboutGSI() {
   return (
-    <section id="methodology" className="gsi-card scroll-mt-20 px-5 py-6 sm:px-6 sm:py-7">
-      <div id="about" className="max-w-2xl scroll-mt-20">
-        <p className="gsi-kicker">A common language for soil</p>
-        <h2 className="mt-1 text-2xl font-extrabold tracking-tight">
-          From fragmented data to accountable action
+    <section id="methodology" className="scroll-mt-24 border-t border-white/12 pt-7">
+      <div id="about" className="scroll-mt-24">
+        <p className="gsi-kicker">Open methodology</p>
+        <h2 className="mt-2 max-w-2xl text-2xl font-medium uppercase leading-tight text-white sm:text-3xl">
+          A common language for the ground beneath us
         </h2>
-        <p className="mt-3 text-sm leading-6 text-[#64716a]">
-          The Global Soil Index translates complex environmental evidence into
-          a clear, comparable benchmark without hiding the quality or limits of
-          the underlying data.
+        <p className="mt-4 max-w-2xl text-sm leading-6 text-white/48">
+          The Global Soil Index turns fragmented environmental evidence into a
+          transparent benchmark while keeping data quality and uncertainty visible.
         </p>
       </div>
 
-      <div className="mt-7 grid border-y border-[#dce4dd] sm:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-8 grid border-y border-white/10 sm:grid-cols-2">
         {principles.map(({ number, title, text, Icon }, index) => (
           <article
             key={title}
-            className={`py-5 sm:p-5 ${index > 0 ? "border-t border-[#dce4dd] sm:border-t-0" : ""} ${index % 2 === 1 ? "sm:border-l" : ""} ${index > 1 ? "sm:border-t xl:border-t-0" : ""} ${index > 0 ? "xl:border-l" : ""}`}
+            className={`p-5 sm:p-6 ${index > 0 ? "border-t border-white/10" : ""} ${index % 2 === 1 ? "sm:border-l" : ""} ${index === 2 ? "sm:border-t" : ""}`}
           >
             <div className="flex items-center justify-between">
-              <Icon size={20} className="text-[#557b1b]" />
-              <span className="text-xs font-bold text-[#9aa49e]">{number}</span>
+              <Icon size={20} className="text-[#79bd45]" />
+              <span className="text-[10px] font-semibold text-white/28">{number}</span>
             </div>
-            <h3 className="mt-4 text-sm font-extrabold">{title}</h3>
-            <p className="mt-2 text-xs leading-5 text-[#64716a]">{text}</p>
+            <h3 className="mt-5 text-sm font-semibold uppercase tracking-[0.05em]">{title}</h3>
+            <p className="mt-2 text-xs leading-5 text-white/42">{text}</p>
           </article>
         ))}
-      </div>
-
-      <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm font-semibold text-[#34423a]">
-          Think of it as an economic index for the living ground beneath us.
-        </p>
-        <span className="text-xs font-bold text-[#557b1b]">
-          Full methodology publishes with the 2026 edition
-        </span>
       </div>
     </section>
   );
