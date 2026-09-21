@@ -3,6 +3,7 @@
 import { Leaf } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { datasetMetadata } from "@/data/countries";
 
 const footerLinks = [
   { label: "Rankings", href: "/" },
@@ -15,7 +16,22 @@ const footerLinks = [
 export function Footer() {
   const pathname = usePathname();
 
-  if (pathname === "/") return null;
+  if (pathname === "/") {
+    return (
+      <footer className="px-5 pb-4 pt-1 sm:px-8 lg:px-[34px]">
+        <div className="flex flex-col gap-2 text-[10px] text-[#8a8071] sm:flex-row sm:items-center sm:justify-between">
+          <p>Soil is one of humanity&apos;s most valuable assets. Take care of it.</p>
+          <div className="flex items-center gap-3 text-white/36">
+            <span>Updated: {datasetMetadata.updateLabel}</span>
+            <span className="flex items-center gap-1.5 uppercase text-[#8cbf60]">
+              <span className="size-1.5 rounded-full bg-[#8cbf60]" />
+              {datasetMetadata.statusLabel}
+            </span>
+          </div>
+        </div>
+      </footer>
+    );
+  }
 
   return (
     <footer className="mt-16 border-t border-white/10">
