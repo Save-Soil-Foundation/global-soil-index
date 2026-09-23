@@ -2,6 +2,7 @@
 
 import { Filter, Search, X } from "lucide-react";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
 import { CountryFlag } from "@/components/CountryFlag";
 import { GlobalSoilTicker } from "@/components/GlobalSoilTicker";
@@ -190,8 +191,8 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
   }
 
   return (
-    <section id="rankings" className="scroll-mt-28">
-      <div className="flex flex-col gap-3.5 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
+    <section id="rankings" className="gsi-animate-page scroll-mt-28">
+      <div className="gsi-animate-panel flex flex-col gap-3.5 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div className="min-w-0">
           <h1 className="gsi-display text-[24px] leading-[1.08] text-white min-[380px]:text-[26px] sm:text-[30px] lg:whitespace-nowrap lg:text-[31px] xl:text-[33px]">
             Explore{" "}
@@ -403,7 +404,8 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
           <Link
             key={country.slug}
             href={`/country/${country.slug}`}
-            className="group flex min-h-[100px] flex-col items-center justify-center rounded-md border border-white/[0.055] bg-[#192226] px-2 py-2 text-center transition hover:border-[#8cbf60]/45 hover:bg-[#1d292e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cbf60] sm:min-h-[118px] sm:py-2.5 xl:min-h-[116px]"
+            className="gsi-animate-card gsi-hover-lift group flex min-h-[100px] flex-col items-center justify-center rounded-md border border-white/[0.055] bg-[#192226] px-2 py-2 text-center hover:border-[#8cbf60]/45 hover:bg-[#1d292e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cbf60] sm:min-h-[118px] sm:py-2.5 xl:min-h-[116px]"
+            style={{ "--gsi-index": index } as CSSProperties}
           >
             <CountryFlag
               country={country}

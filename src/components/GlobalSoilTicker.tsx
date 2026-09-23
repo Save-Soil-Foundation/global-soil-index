@@ -62,7 +62,7 @@ export function GlobalSoilTicker({ items, metadata }: GlobalSoilTickerProps) {
 
   return (
     <section
-      className="mt-4 overflow-hidden rounded-md border border-white/[0.12] bg-[#11191c]"
+      className="gsi-animate-panel mt-4 overflow-hidden rounded-md border border-white/[0.12] bg-[#11191c]"
       aria-label="Global soil ticker feed"
     >
       <div className="grid min-h-[76px] min-w-0 grid-cols-[minmax(0,1fr)_42px] lg:grid-cols-[238px_minmax(0,1fr)_40px]">
@@ -103,7 +103,7 @@ export function GlobalSoilTicker({ items, metadata }: GlobalSoilTickerProps) {
         <button
           type="button"
           onClick={scrollTicker}
-          className="flex min-h-12 items-center justify-center border-l border-white/10 text-white/54 transition hover:bg-white/[0.04] hover:text-[#9ccb68] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9ccb68] lg:min-h-10"
+          className="gsi-pulse-ring flex min-h-12 items-center justify-center border-l border-white/10 text-white/54 transition hover:bg-white/[0.04] hover:text-[#9ccb68] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#9ccb68] lg:min-h-10"
           aria-label="Show more ticker countries"
         >
           <ChevronRight size={18} />

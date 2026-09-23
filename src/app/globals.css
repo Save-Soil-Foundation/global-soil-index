@@ -85,6 +85,46 @@ select:focus-visible {
   to { opacity: 1; }
 }
 
+@keyframes gsi-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gsi-soft-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gsi-meter-fill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes gsi-subtle-pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(140, 191, 96, 0);
+  }
+  50% {
+    box-shadow: 0 0 0 4px rgba(140, 191, 96, 0.08);
+  }
+}
+
 @keyframes gsi-sheet-in {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
@@ -109,6 +149,42 @@ select:focus-visible {
   min-width: 200%;
   animation: gsi-ticker-marquee var(--gsi-ticker-duration, 42s) linear infinite;
   will-change: transform;
+}
+
+.gsi-animate-page {
+  animation: gsi-rise-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.gsi-animate-panel {
+  animation: gsi-soft-pop 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.gsi-animate-card {
+  animation: gsi-soft-pop 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: min(calc(var(--gsi-index, 0) * 18ms), 420ms);
+}
+
+.gsi-hover-lift {
+  transform: translateZ(0);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.gsi-hover-lift:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+}
+
+.gsi-meter-fill {
+  transform-origin: left;
+  animation: gsi-meter-fill 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.gsi-pulse-ring {
+  animation: gsi-subtle-pulse 2.4s ease-in-out infinite;
 }
 
 .group\/ticker:hover .gsi-ticker-track,
@@ -159,6 +235,19 @@ select:focus-visible {
 
   .gsi-ticker-track {
     animation: none;
+    transform: none;
+  }
+
+  .gsi-animate-page,
+  .gsi-animate-panel,
+  .gsi-animate-card,
+  .gsi-meter-fill,
+  .gsi-pulse-ring {
+    animation: none;
+  }
+
+  .gsi-hover-lift,
+  .gsi-hover-lift:hover {
     transform: none;
   }
 }

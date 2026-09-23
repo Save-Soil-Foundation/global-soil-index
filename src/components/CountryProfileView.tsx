@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowLeft, Database, ShieldCheck } from "lucide-react";
+import type { CSSProperties } from "react";
 import { CountryFlag } from "@/components/CountryFlag";
 import type { CountryHistoryPoint, CountryProfile, SoilIndicatorValue } from "@/lib/soil-types";
 import { cn } from "@/lib/utils";
@@ -23,7 +24,7 @@ function IndicatorMeter({ indicator }: { indicator: SoilIndicatorValue }) {
   const value = indicator.value;
 
   return (
-    <article className="rounded-md border border-white/[0.08] bg-[#141d21] p-4">
+    <article className="gsi-animate-card gsi-hover-lift rounded-md border border-white/[0.08] bg-[#141d21] p-4">
       <div className="flex items-start justify-between gap-3">
         <div>
           <h3 className="text-xs font-semibold uppercase tracking-[0.04em] text-white">
@@ -38,7 +39,10 @@ function IndicatorMeter({ indicator }: { indicator: SoilIndicatorValue }) {
 
       <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-white/[0.08]">
         <div
-          className={cn("h-full rounded-full", value === null ? "bg-white/14" : "bg-[#8cbf60]")}
+          className={cn(
+            "gsi-meter-fill h-full rounded-full",
+            value === null ? "bg-white/14" : "bg-[#8cbf60]"
+          )}
           style={{ width: `${value ?? 0}%` }}
         />
       </div>
@@ -67,7 +71,7 @@ function HistoryChart({ history }: { history: CountryHistoryPoint[] }) {
             <div key={point.year} className="flex h-full flex-1 flex-col justify-end gap-2">
               <div
                 className={cn(
-                  "rounded-t-sm",
+                  "gsi-meter-fill rounded-t-sm",
                   point.score === null ? "bg-white/12" : "bg-[#8cbf60]"
                 )}
                 style={{ height: `${height}%` }}
@@ -91,7 +95,7 @@ export function CountryProfileView({ profile }: CountryProfileViewProps) {
   const historicalChangePositive = (country.historicalChange ?? 0) >= 0;
 
   return (
-    <main className="mx-auto min-h-[calc(100vh-96px)] max-w-[1400px] px-5 py-8 sm:px-8 lg:px-[34px] lg:py-10">
+    <main className="gsi-animate-page mx-auto min-h-[calc(100vh-96px)] max-w-[1400px] px-5 py-8 sm:px-8 lg:px-[34px] lg:py-10">
       <Link
         href="/"
         className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-white/44 transition hover:text-[#8cbf60]"
@@ -99,7 +103,7 @@ export function CountryProfileView({ profile }: CountryProfileViewProps) {
         <ArrowLeft size={14} /> Rankings
       </Link>
 
-      <header className="mt-7 grid gap-6 border-b border-white/10 pb-8 lg:grid-cols-[1fr_auto] lg:items-end">
+      <header className="gsi-animate-panel mt-7 grid gap-6 border-b border-white/10 pb-8 lg:grid-cols-[1fr_auto] lg:items-end">
         <div className="flex items-start gap-5">
           <CountryFlag country={country} width={86} height={56} priority />
           <div>
@@ -131,8 +135,12 @@ export function CountryProfileView({ profile }: CountryProfileViewProps) {
                 : `${historicalChangePositive ? "+" : ""}${country.historicalChange.toFixed(1)}`,
               historicalChangePositive ? "text-[#8cbf60]" : "text-[#e05d58]",
             ],
-          ].map(([label, value, tone]) => (
-            <article key={label} className="rounded-md border border-white/[0.08] bg-[#141d21] p-4">
+          ].map(([label, value, tone], index) => (
+            <article
+              key={label}
+              className="gsi-animate-card gsi-hover-lift rounded-md border border-white/[0.08] bg-[#141d21] p-4"
+              style={{ "--gsi-index": index } as CSSProperties}
+            >
               <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-white/34">
                 {label}
               </p>
@@ -154,8 +162,10 @@ export function CountryProfileView({ profile }: CountryProfileViewProps) {
             </span>
           </div>
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            {profile.indicators.map((indicator) => (
-              <IndicatorMeter key={indicator.id} indicator={indicator} />
+            {profile.indicators.map((indicator, index) => (
+              <div key={indicator.id} style={{ "--gsi-index": index } as CSSProperties}>
+                <IndicatorMeter indicator={indicator} />
+              </div>
             ))}
           </div>
         </div>
@@ -169,7 +179,7 @@ export function CountryProfileView({ profile }: CountryProfileViewProps) {
             </div>
           </section>
 
-          <section className="rounded-md border border-white/[0.08] bg-[#141d21] p-5">
+          <section className="gsi-animate-panel rounded-md border border-white/[0.08] bg-[#141d21] p-5">
             <div className="flex items-center gap-3">
               <ShieldCheck size={18} className="text-[#8cbf60]" />
               <div>
@@ -187,7 +197,7 @@ export function CountryProfileView({ profile }: CountryProfileViewProps) {
             </ul>
           </section>
 
-          <section className="rounded-md border border-white/[0.08] bg-[#141d21] p-5">
+          <section className="gsi-animate-panel rounded-md border border-white/[0.08] bg-[#141d21] p-5">
             <div className="flex items-center gap-3">
               <Database size={18} className="text-[#8cbf60]" />
               <div>
