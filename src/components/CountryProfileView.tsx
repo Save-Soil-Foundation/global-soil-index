@@ -2,6 +2,8 @@ import Link from "next/link";
 import { ArrowLeft, Database, ShieldCheck } from "lucide-react";
 import type { CSSProperties } from "react";
 import { CountryFlag } from "@/components/CountryFlag";
+import { SectionHeader } from "@/components/SectionHeader";
+import { StatCard } from "@/components/StatCard";
 import type { CountryHistoryPoint, CountryProfile, SoilIndicatorValue } from "@/lib/soil-types";
 import { cn } from "@/lib/utils";
 
@@ -104,11 +106,11 @@ export function CountryProfileView({ profile }: CountryProfileViewProps) {
       </Link>
 
       <header className="gsi-animate-panel mt-7 grid gap-6 border-b border-white/10 pb-8 lg:grid-cols-[1fr_auto] lg:items-end">
-        <div className="flex items-start gap-5">
-          <CountryFlag country={country} width={86} height={56} priority />
-          <div>
+        <div className="flex flex-col gap-4 min-[420px]:flex-row min-[420px]:items-start min-[420px]:gap-5">
+          <CountryFlag country={country} width={74} height={48} priority />
+          <div className="min-w-0">
             <p className="gsi-kicker">{country.region}</p>
-            <h1 className="mt-2 text-4xl font-light uppercase leading-none text-white sm:text-5xl">
+            <h1 className="mt-2 text-3xl font-light uppercase leading-none text-white sm:text-5xl">
               {country.name}
             </h1>
             <p className="mt-3 max-w-2xl text-sm leading-6 text-white/46">
@@ -119,48 +121,48 @@ export function CountryProfileView({ profile }: CountryProfileViewProps) {
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:min-w-[520px]">
           {[
-            ["Rank", country.rank === null ? "NA" : `#${country.rank}`, "text-[#8cbf60]"],
-            ["Score", formatValue(country.score), "text-white"],
+            ["Rank", country.rank === null ? "NA" : `#${country.rank}`, "success"],
+            ["Score", formatValue(country.score), "default"],
             [
               "Vs yesterday",
               country.scoreChange === null
                 ? "N/A"
                 : `${scoreChangePositive ? "+" : ""}${country.scoreChange.toFixed(1)}`,
-              scoreChangePositive ? "text-[#8cbf60]" : "text-[#e05d58]",
+              scoreChangePositive ? "success" : "danger",
             ],
             [
               "Historical",
               country.historicalChange === null
                 ? "N/A"
                 : `${historicalChangePositive ? "+" : ""}${country.historicalChange.toFixed(1)}`,
-              historicalChangePositive ? "text-[#8cbf60]" : "text-[#e05d58]",
+              historicalChangePositive ? "success" : "danger",
             ],
           ].map(([label, value, tone], index) => (
-            <article
+            <div
               key={label}
-              className="gsi-animate-card gsi-hover-lift rounded-md border border-white/[0.08] bg-[#141d21] p-4"
               style={{ "--gsi-index": index } as CSSProperties}
             >
-              <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-white/34">
-                {label}
-              </p>
-              <p className={cn("mt-2 text-2xl font-light tabular-nums", tone)}>{value}</p>
-            </article>
+              <StatCard
+                label={label}
+                value={value}
+                tone={tone as "default" | "success" | "danger"}
+              />
+            </div>
           ))}
         </div>
       </header>
 
       <section className="mt-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <div>
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="gsi-kicker">Indicators</p>
-              <h2 className="mt-2 text-2xl font-light uppercase">Soil-health indicator view</h2>
-            </div>
+          <SectionHeader
+            eyebrow="Indicators"
+            title="Soil-health indicator view"
+            actions={
             <span className={cn("text-xs font-semibold uppercase", statusTone(profile.scoreAvailability))}>
               {profile.scoreAvailability}
             </span>
-          </div>
+            }
+          />
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             {profile.indicators.map((indicator, index) => (
               <div key={indicator.id} style={{ "--gsi-index": index } as CSSProperties}>

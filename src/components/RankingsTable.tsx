@@ -1,11 +1,11 @@
 "use client";
 
 import { Filter, Search, X } from "lucide-react";
-import Link from "next/link";
-import type { CSSProperties } from "react";
 import { useMemo, useState } from "react";
-import { CountryFlag } from "@/components/CountryFlag";
+import { BlogSection } from "@/components/BlogSection";
+import { CountryRankCard } from "@/components/CountryRankCard";
 import { GlobalSoilTicker } from "@/components/GlobalSoilTicker";
+import { PartnershipSection } from "@/components/PartnershipSection";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -87,14 +87,6 @@ function rankInRange(rank: number | null, range: RankRange) {
   if (range === "1-50") return rank <= 50;
   if (range === "51-100") return rank >= 51 && rank <= 100;
   return rank >= 101;
-}
-
-function formatRank(rank: number | null) {
-  return rank === null ? "NA" : rank.toString();
-}
-
-function formatScore(score: number | null) {
-  return score === null ? "N/A" : score.toFixed(1);
 }
 
 function compareNullableNumbers(
@@ -401,28 +393,7 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
 
       <div className="mt-3 grid grid-cols-2 gap-[7px] min-[520px]:grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10">
         {visibleCountries.map((country, index) => (
-          <Link
-            key={country.slug}
-            href={`/country/${country.slug}`}
-            className="gsi-animate-card gsi-hover-lift group flex min-h-[100px] flex-col items-center justify-center rounded-md border border-white/[0.055] bg-[#192226] px-2 py-2 text-center hover:border-[#8cbf60]/45 hover:bg-[#1d292e] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8cbf60] sm:min-h-[118px] sm:py-2.5 xl:min-h-[116px]"
-            style={{ "--gsi-index": index } as CSSProperties}
-          >
-            <CountryFlag
-              country={country}
-              width={44}
-              height={29}
-              priority={index < 10}
-            />
-            <div className="mt-1.5 text-[11px] font-semibold leading-none tabular-nums text-[#8cbf60] sm:text-[12px]">
-              {formatRank(country.rank)}
-            </div>
-            <h2 className="mt-1 flex min-h-[24px] max-w-full items-center text-balance text-[10px] font-semibold leading-[12px] text-white sm:min-h-[26px] sm:text-[10.5px] sm:leading-[13px]">
-              {country.name}
-            </h2>
-            <div className="mt-0.5 text-[10.5px] font-medium tabular-nums text-white/80 sm:mt-1 sm:text-[11px]">
-              {formatScore(country.score)}
-            </div>
-          </Link>
+          <CountryRankCard key={country.slug} country={country} index={index} />
         ))}
       </div>
 
@@ -450,6 +421,9 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
       <div className="hidden sm:block">
         <GlobalSoilTicker items={tickerItems} metadata={metadata} />
       </div>
+
+      <PartnershipSection />
+      <BlogSection />
     </section>
   );
 }
