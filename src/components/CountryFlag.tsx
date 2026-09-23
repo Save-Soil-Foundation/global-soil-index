@@ -8,6 +8,7 @@ type CountryFlagProps = {
   width?: number;
   height?: number;
   priority?: boolean;
+  sizes?: string;
 };
 
 export function CountryFlag({
@@ -16,6 +17,7 @@ export function CountryFlag({
   width = 64,
   height = 42,
   priority = false,
+  sizes,
 }: CountryFlagProps) {
   return (
     <Image
@@ -24,9 +26,12 @@ export function CountryFlag({
       width={width}
       height={height}
       priority={priority}
+      loading={priority ? "eager" : "lazy"}
+      fetchPriority={priority ? "high" : "auto"}
+      decoding="async"
       style={{ width: `${width}px`, height: `${height}px` }}
       className={cn("rounded-[2px] object-cover shadow-[0_4px_12px_rgba(0,0,0,0.22)]", className)}
-      sizes={`${width}px`}
+      sizes={sizes ?? `${width}px`}
     />
   );
 }

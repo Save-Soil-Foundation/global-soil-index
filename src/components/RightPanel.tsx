@@ -129,7 +129,15 @@ export function RightPanel() {
           {updates.map((update) => (
             <article key={update.title} className="grid grid-cols-[120px_1fr] overflow-hidden border border-white/10 bg-[#0d171b]">
               <div className="relative min-h-[108px]">
-                <Image src={update.image} alt="" fill sizes="120px" className="object-cover" />
+                <Image
+                  src={update.image}
+                  alt=""
+                  fill
+                  loading="lazy"
+                  decoding="async"
+                  sizes="120px"
+                  className="object-cover"
+                />
               </div>
               <div className="p-4">
                 <p className="text-[9px] font-semibold uppercase tracking-[0.08em] text-[#79bd45]">{update.category}</p>

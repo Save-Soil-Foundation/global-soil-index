@@ -1,9 +1,9 @@
 "use client";
 
 import { Filter, Search, X } from "lucide-react";
+import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { CountryRankCard } from "@/components/CountryRankCard";
-import { GlobalSoilTicker } from "@/components/GlobalSoilTicker";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -37,6 +37,18 @@ type RankingsTableProps = {
   metadata: DatasetMetadata;
   tickerItems: SoilTickerItem[];
 };
+
+const GlobalSoilTicker = dynamic(
+  () => import("@/components/GlobalSoilTicker").then((module) => module.GlobalSoilTicker),
+  {
+    loading: () => (
+      <div className="mt-4 min-h-[76px] animate-pulse rounded-md border border-white/[0.12] bg-[#11191c]">
+        <div className="h-full min-h-[76px] bg-[linear-gradient(90deg,rgba(255,255,255,0.03),rgba(255,255,255,0.08),rgba(255,255,255,0.03))]" />
+      </div>
+    ),
+    ssr: false,
+  }
+);
 
 const sortLabels: Record<SortOption, string> = {
   rank: "Rank",
