@@ -34,9 +34,9 @@ export function BlogSection() {
   return (
     <section className="gsi-animate-panel mt-6 border-y border-white/10 py-6 sm:mt-7 sm:py-7">
       <SectionHeader
-        eyebrow="Research notes"
-        title="SEO-ready soil health explainers and index updates."
-        description="Short, crawlable insight cards give visitors and search engines a clearer path into the methodology, data-quality story, and map experience."
+        eyebrow="Blog"
+        title="Soil health explainers and index updates."
+        description="A compact editorial area for methodology notes, data-quality explainers, and map stories."
         actions={<Badge>Editorial hub</Badge>}
       />
 

@@ -422,8 +422,8 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
         <GlobalSoilTicker items={tickerItems} metadata={metadata} />
       </div>
 
-      <PartnershipSection />
       <BlogSection />
+      <PartnershipSection />
     </section>
   );
 }
