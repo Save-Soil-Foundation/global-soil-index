@@ -24,6 +24,7 @@ export function CountryFlag({
       width={width}
       height={height}
       priority={priority}
+      style={{ width, height }}
       className={cn("rounded-[2px] object-cover shadow-[0_4px_12px_rgba(0,0,0,0.22)]", className)}
       sizes={`${width}px`}
     />
