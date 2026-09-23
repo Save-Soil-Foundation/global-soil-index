@@ -59,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body>
         <div className="flex min-h-screen flex-col bg-[#060c0f] text-[#f0f4f1]">
           <Sidebar />
