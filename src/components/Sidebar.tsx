@@ -1,6 +1,16 @@
 "use client";
 
-import { BarChart3, Braces, ChevronRight, Globe2, Info, Layers3, LineChart } from "lucide-react";
+import {
+  BarChart3,
+  BookOpen,
+  Braces,
+  ChevronRight,
+  Globe2,
+  Handshake,
+  Info,
+  Layers3,
+  LineChart,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -24,6 +34,8 @@ const navItems = [
   { label: "Rankings", href: "/", icon: BarChart3 },
   { label: "Methodology", href: "/methodology", icon: Layers3 },
   { label: "Insights", href: "/insights", icon: LineChart },
+  { label: "Blog", href: "/blog", icon: BookOpen },
+  { label: "Partnerships", href: "/partnerships", icon: Handshake },
   { label: "About", href: "/about", icon: Info },
 ];
 
@@ -73,7 +85,7 @@ export function Sidebar() {
 
           <div className="flex items-center gap-2 sm:gap-4">
             <nav
-              className="hidden items-center gap-6 xl:flex"
+              className="hidden items-center gap-4 xl:flex 2xl:gap-6"
               aria-label="Primary navigation"
             >
               {navItems.map((item) => {
@@ -85,7 +97,7 @@ export function Sidebar() {
                     href={item.href}
                     aria-current={active ? "page" : undefined}
                     className={cn(
-                      "text-[11px] font-semibold uppercase tracking-[0.05em] text-white/58 transition hover:text-white",
+                      "text-[10px] font-semibold uppercase tracking-[0.05em] text-white/58 transition hover:text-white 2xl:text-[11px]",
                       active && "text-[#9ccb68]"
                     )}
                   >

@@ -2,10 +2,8 @@
 
 import { Filter, Search, X } from "lucide-react";
 import { useMemo, useState } from "react";
-import { BlogSection } from "@/components/BlogSection";
 import { CountryRankCard } from "@/components/CountryRankCard";
 import { GlobalSoilTicker } from "@/components/GlobalSoilTicker";
-import { PartnershipSection } from "@/components/PartnershipSection";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -421,9 +419,6 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
       <div className="hidden sm:block">
         <GlobalSoilTicker items={tickerItems} metadata={metadata} />
       </div>
-
-      <BlogSection />
-      <PartnershipSection />
     </section>
   );
 }
