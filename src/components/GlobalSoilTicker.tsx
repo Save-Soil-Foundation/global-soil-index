@@ -2,7 +2,7 @@
 
 import { ChevronRight } from "lucide-react";
 import type { CSSProperties } from "react";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { CountryFlag } from "@/components/CountryFlag";
 import type { DatasetMetadata, SoilTickerItem } from "@/lib/soil-types";
 
@@ -32,7 +32,7 @@ function TickerItem({
   return (
     <article
       aria-hidden={hiddenFromAssistiveTech}
-      className="flex min-w-0 items-center gap-2 border-r border-white/[0.08] px-2.5 py-2 sm:min-w-[130px] sm:gap-2.5 sm:px-3"
+      className="flex min-w-0 snap-start items-center gap-2 border-r border-white/[0.08] px-2.5 py-2 sm:gap-2.5 sm:px-3"
     >
       <CountryFlag country={item} width={26} height={17} />
       <div className="min-w-0">
@@ -51,11 +51,22 @@ function TickerItem({
 
 export function GlobalSoilTicker({ items, metadata }: GlobalSoilTickerProps) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
+  const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [manuallyPaused, setManuallyPaused] = useState(false);
   const animationDuration = `${Math.max(42, Math.round(items.length * 1.1))}s`;
 
   function scrollTicker() {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+
+    setManuallyPaused(true);
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+    }
+    pauseTimeoutRef.current = setTimeout(() => setManuallyPaused(false), 4200);
+
     scrollerRef.current?.scrollBy({
-      left: 360,
+      left: Math.max(180, Math.round(scroller.clientWidth * 0.75)),
       behavior: "smooth",
     });
   }
@@ -79,12 +90,14 @@ export function GlobalSoilTicker({ items, metadata }: GlobalSoilTickerProps) {
 
         <div
           ref={scrollerRef}
-          className="group/ticker min-w-0 overflow-hidden"
+          className="group/ticker gsi-ticker-viewport min-w-0 overflow-x-auto overflow-y-hidden"
           tabIndex={0}
           aria-label="Ticker countries"
         >
           <div
-            className="gsi-ticker-track grid auto-cols-[50%] grid-flow-col sm:auto-cols-[130px]"
+            className={`gsi-ticker-track grid grid-flow-col auto-cols-[clamp(128px,46vw,168px)] sm:auto-cols-[148px] ${
+              manuallyPaused ? "gsi-ticker-paused" : ""
+            }`}
             style={{ "--gsi-ticker-duration": animationDuration } as CSSProperties}
           >
             {items.map((item) => (

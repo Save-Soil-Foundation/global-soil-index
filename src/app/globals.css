@@ -151,6 +151,16 @@ select:focus-visible {
   will-change: transform;
 }
 
+.gsi-ticker-viewport {
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.gsi-ticker-viewport::-webkit-scrollbar {
+  display: none;
+}
+
 .gsi-animate-page {
   animation: gsi-rise-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -189,7 +199,8 @@ select:focus-visible {
 
 .group\/ticker:hover .gsi-ticker-track,
 .group\/ticker:focus .gsi-ticker-track,
-.group\/ticker:focus-within .gsi-ticker-track {
+.group\/ticker:focus-within .gsi-ticker-track,
+.gsi-ticker-track.gsi-ticker-paused {
   animation-play-state: paused;
 }
 
