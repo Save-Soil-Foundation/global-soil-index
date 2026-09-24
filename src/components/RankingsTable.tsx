@@ -3,6 +3,7 @@
 import { Filter, Search, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
+import { GlobalSoilPulse } from "@/components/GlobalSoilPulse";
 import { CountryRankCard } from "@/components/CountryRankCard";
 import { Button } from "@/components/ui/button";
 import {
@@ -194,14 +195,18 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
 
   return (
     <section id="rankings" className="gsi-animate-page scroll-mt-28">
-      <div className="gsi-animate-panel flex flex-col gap-3.5 sm:gap-4 lg:flex-row lg:items-end lg:justify-between">
+      <div className="gsi-animate-panel relative isolate -mx-5 -mt-5 bg-[#091216] sm:-mx-8 lg:-mx-[34px] lg:-mt-6">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-cover bg-left-top brightness-110" style={{ backgroundImage: "url('/assets/earth-hero-left.png')" }} />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(0deg,#060d10_0%,transparent_35%),linear-gradient(90deg,rgba(6,13,16,0.85)_0%,rgba(6,13,16,0.3)_45%,rgba(6,13,16,0.05)_100%)]" />
+        <div className="grid items-center gap-4 px-5 py-4 sm:px-8 sm:py-4 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-8 lg:px-[34px] lg:py-5">
+      <div className="flex min-w-0 flex-col gap-3">
         <div className="min-w-0">
-          <h1 className="gsi-display text-[24px] leading-[1.08] text-white min-[380px]:text-[26px] sm:text-[30px] lg:whitespace-nowrap lg:text-[31px] xl:text-[33px]">
+          <h1 className="gsi-display text-[24px] leading-[1.08] text-white min-[380px]:text-[26px] sm:text-[30px] lg:text-[31px] xl:text-[33px]">
             Explore{" "}
             <span className="text-[#8cbf60]">the world&apos;s soil health</span>
           </h1>
           <p className="mt-1 text-[13px] text-white/48 sm:mt-1.5 sm:text-sm">
-            196 Countries. 1 Global Index.
+            {metadata.countryCount} Countries. 1 Global Index.
           </p>
         </div>
 
@@ -366,6 +371,10 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
               </div>
             </PopoverContent>
           </Popover>
+        </div>
+      </div>
+
+          <GlobalSoilPulse rankings={rankings} metadata={metadata} />
         </div>
       </div>
 

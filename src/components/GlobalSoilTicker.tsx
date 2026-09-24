@@ -53,7 +53,7 @@ export function GlobalSoilTicker({ items, metadata }: GlobalSoilTickerProps) {
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [manuallyPaused, setManuallyPaused] = useState(false);
-  const animationDuration = `${Math.max(42, Math.round(items.length * 1.1))}s`;
+  const animationDuration = `${Math.max(0.5, items.length * 0.04)}s`;
 
   function scrollTicker() {
     const scroller = scrollerRef.current;
@@ -90,12 +90,12 @@ export function GlobalSoilTicker({ items, metadata }: GlobalSoilTickerProps) {
 
         <div
           ref={scrollerRef}
-          className="group/ticker gsi-ticker-viewport min-w-0 overflow-x-auto overflow-y-hidden"
+          className="group/ticker gsi-ticker-viewport flex min-w-0 items-stretch overflow-x-auto overflow-y-hidden"
           tabIndex={0}
           aria-label="Ticker countries"
         >
           <div
-            className={`gsi-ticker-track grid grid-flow-col auto-cols-[clamp(128px,46vw,168px)] sm:auto-cols-[148px] ${
+            className={`gsi-ticker-track grid min-h-12 items-stretch grid-flow-col auto-cols-[clamp(128px,46vw,168px)] sm:auto-cols-[148px] ${
               manuallyPaused ? "gsi-ticker-paused" : ""
             }`}
             style={{ "--gsi-ticker-duration": animationDuration } as CSSProperties}
