@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { AboutGSI } from "@/components/AboutGSI";
 
-export const metadata: Metadata = {
-  title: "Methodology | Global Soil Index",
-  description: "How the Global Soil Index measures, verifies, and compares national soil health.",
-};
+export const metadata = pageMetadata(
+  "Methodology | Soil Index",
+  "How the Global Soil Index measures, verifies, and compares national soil health.",
+  "/methodology"
+);
 
 const indicators = [
   ["01", "Soil organic carbon", "Long-term carbon storage and biological productivity."],

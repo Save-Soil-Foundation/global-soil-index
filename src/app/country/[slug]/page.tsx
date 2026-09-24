@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { notFound } from "next/navigation";
 import { CountryProfileView } from "@/components/CountryProfileView";
 import { getSoilDataProvider } from "@/lib/soil-data";
@@ -25,14 +26,16 @@ export async function generateMetadata({ params }: CountryPageProps): Promise<Me
 
   if (!profile) {
     return {
-      title: "Country not found | Global Soil Index",
+      title: "Country not found | Soil Index",
+      robots: { index: false, follow: false },
     };
   }
 
-  return {
-    title: `${profile.country.name} Soil Health Profile | Global Soil Index`,
-    description: `Prototype soil-health ranking, indicators, and data-quality notes for ${profile.country.name}.`,
-  };
+  return pageMetadata(
+    `${profile.country.name} Soil Health Profile | Soil Index`,
+    `Prototype soil-health ranking, indicators, and data-quality notes for ${profile.country.name}.`,
+    `/country/${profile.country.slug}`
+  );
 }
 
 export default async function CountryPage({ params }: CountryPageProps) {

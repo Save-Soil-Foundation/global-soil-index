@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { BlogSection } from "@/components/BlogSection";
 
-export const metadata: Metadata = {
-  title: "Blog | Global Soil Index",
-  description:
-    "Soil health explainers, methodology notes, data-quality articles, and Global Soil Index updates.",
-};
+export const metadata = pageMetadata(
+  "Blog | Soil Index",
+  "Soil health explainers, methodology notes, data-quality articles, and Global Soil Index updates.",
+  "/blog"
+);
 
 export default function BlogPage() {
   return (

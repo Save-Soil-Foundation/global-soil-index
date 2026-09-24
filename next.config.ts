@@ -1,7 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return ["globalsoilindex.org", "www.globalsoilindex.org", "www.soilindex.org"].map((host) => ({
+      source: "/:path*",
+      has: [{ type: "host" as const, value: host }],
+      destination: "https://soilindex.org/:path*",
+      permanent: true,
+    }));
+  },
   images: {
     remotePatterns: [
       {

@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Braces, Check, Database, KeyRound } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Data API | Global Soil Index",
-  description: "Developer access to Global Soil Index rankings and indicator data.",
-};
+export const metadata = pageMetadata(
+  "Data API | Soil Index",
+  "Developer access to Global Soil Index rankings and indicator data.",
+  "/data-api"
+);
 
 const endpoints = [
   ["GET", "/v1/countries", "List country rankings and live composite scores."],

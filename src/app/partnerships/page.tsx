@@ -1,11 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { PartnershipSection } from "@/components/PartnershipSection";
 
-export const metadata: Metadata = {
-  title: "Partnerships | Global Soil Index",
-  description:
-    "Collaboration, review partner, data contributor, and governance pathways for the Global Soil Index.",
-};
+export const metadata = pageMetadata(
+  "Partnerships | Soil Index",
+  "Collaboration, review partner, data contributor, and governance pathways for the Global Soil Index.",
+  "/partnerships"
+);
 
 export default function PartnershipsPage() {
   return (

@@ -1,11 +1,12 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { Eye, Scale, ShieldCheck, Users } from "lucide-react";
 import { getSoilDataProvider } from "@/lib/soil-data";
 
-export const metadata: Metadata = {
-  title: "About | Global Soil Index",
-  description: "The purpose, principles, and current prototype status of the Global Soil Index.",
-};
+export const metadata = pageMetadata(
+  "About | Soil Index",
+  "The purpose, principles, and current prototype status of the Global Soil Index.",
+  "/about"
+);
 
 const values = [
   {

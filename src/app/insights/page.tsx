@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import { RightPanel } from "@/components/RightPanel";
 
-export const metadata: Metadata = {
-  title: "Insights | Global Soil Index",
-  description: "Global soil health leaders, market movement, and research updates.",
-};
+export const metadata = pageMetadata(
+  "Insights | Soil Index",
+  "Global soil health leaders, market movement, and research updates.",
+  "/insights"
+);
 
 export default function InsightsPage() {
   return (

@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
+import { pageMetadata } from "@/lib/seo";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Layers3, MapPin } from "lucide-react";
 
-export const metadata: Metadata = {
-  title: "Soil Health Map | Global Soil Index",
-  description: "Explore spatial patterns in global soil health and resilience.",
-};
+export const metadata = pageMetadata(
+  "Soil Health Map | Soil Index",
+  "Explore spatial patterns in global soil health and resilience.",
+  "/map"
+);
 
 const legend = [
   ["70-100", "Resilient", "#79bd45"],
