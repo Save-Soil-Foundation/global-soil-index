@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 
-export const SITE_URL = "https://soilindex.org";
+export const SITE_URL = "https://www.soilindex.org";
 export const SOCIAL_IMAGE = "/soil-index-social-v1.jpg";
 
 export function pageMetadata(title: string, description: string, path = "/"): Metadata {

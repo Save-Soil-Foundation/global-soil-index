@@ -2,10 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   async redirects() {
-    return ["globalsoilindex.org", "www.globalsoilindex.org", "www.soilindex.org"].map((host) => ({
+    return ["globalsoilindex.org", "www.globalsoilindex.org"].map((host) => ({
       source: "/:path*",
       has: [{ type: "host" as const, value: host }],
-      destination: "https://soilindex.org/:path*",
+      destination: "https://www.soilindex.org/:path*",
       permanent: true,
     }));
   },
