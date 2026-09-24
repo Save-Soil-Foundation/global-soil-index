@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Footer } from "@/components/Footer";
+import { Sidebar } from "@/components/Sidebar";
 import "./globals.css";
 
 const inter = Inter({
@@ -57,8 +59,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body>{children}</body>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body>
+        <div className="flex min-h-screen flex-col bg-[#060c0f] text-[#f0f4f1]">
+          <Sidebar />
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </div>
+      </body>
     </html>
   );
 }

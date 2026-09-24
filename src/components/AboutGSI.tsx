@@ -1,69 +1,60 @@
-import { Building2, Globe2, Leaf, Satellite, Users } from "lucide-react";
+import { Database, Gauge, Scale, ShieldCheck } from "lucide-react";
 
-const cards = [
+const principles = [
   {
     number: "01",
-    title: "What is GSI?",
-    text: "The Global Soil Index ranks countries based on the health of their soil using key indicators.",
-    Icon: Leaf,
+    title: "Measure",
+    text: "Nine indicators combine observed soil condition, pressure, and resilience.",
+    Icon: Gauge,
   },
   {
     number: "02",
-    title: "How it Works",
-    text: "GSI integrates satellite data, ground measurements, and environmental models.",
-    Icon: Satellite,
+    title: "Verify",
+    text: "Satellite observations are checked against reported and ground-level data.",
+    Icon: Database,
   },
   {
     number: "03",
-    title: "Why it Matters",
-    text: "Healthy soils underpin food security, water, biodiversity, and climate resilience.",
-    Icon: Globe2,
+    title: "Compare",
+    text: "A consistent framework makes country performance comparable over time.",
+    Icon: Scale,
   },
   {
     number: "04",
-    title: "What it Drives",
-    text: "GSI drives accountability and inspires action to restore soil health globally.",
-    Icon: Building2,
+    title: "Act",
+    text: "Policy tracking connects environmental outcomes to accountable action.",
+    Icon: ShieldCheck,
   },
 ];
 
 export function AboutGSI() {
   return (
-    <section className="gsi-card p-4 sm:p-5">
-      <div>
-        <h2 className="gsi-heading text-xl">What is the Global Soil Index?</h2>
-        <p className="mt-1 text-sm text-white/70">
-          A comprehensive, science-based assessment of soil health across the world.
+    <section id="methodology" className="scroll-mt-24 border-t border-white/12 pt-7">
+      <div id="about" className="scroll-mt-24">
+        <p className="gsi-kicker">Open methodology</p>
+        <h2 className="mt-2 max-w-2xl text-2xl font-medium uppercase leading-tight text-white sm:text-3xl">
+          A common language for the ground beneath us
+        </h2>
+        <p className="mt-4 max-w-2xl text-sm leading-6 text-white/48">
+          The Global Soil Index turns fragmented environmental evidence into a
+          transparent benchmark while keeping data quality and uncertainty visible.
         </p>
       </div>
 
-      <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
-        {cards.map(({ number, title, text, Icon }) => (
-          <article key={title} className="rounded-xl border gsi-border p-4">
-            <div className="flex items-start justify-between gap-3">
-              <div className="rounded-full bg-lime-400/15 p-3 text-lime-300">
-                <Icon size={24} />
-              </div>
-              <span className="rounded-md bg-sky-500/10 px-2 py-1 text-xs text-cyan-300">
-                {number}
-              </span>
+      <div className="mt-8 grid border-y border-white/10 sm:grid-cols-2">
+        {principles.map(({ number, title, text, Icon }, index) => (
+          <article
+            key={title}
+            className={`p-5 sm:p-6 ${index > 0 ? "border-t border-white/10" : ""} ${index % 2 === 1 ? "sm:border-l" : ""} ${index === 2 ? "sm:border-t" : ""}`}
+          >
+            <div className="flex items-center justify-between">
+              <Icon size={20} className="text-[#79bd45]" />
+              <span className="text-[10px] font-semibold text-white/28">{number}</span>
             </div>
-
-            <h3 className="mt-4 text-sm font-bold">{title}</h3>
-            <p className="mt-2 text-xs leading-relaxed text-white/65">{text}</p>
+            <h3 className="mt-5 text-sm font-semibold uppercase tracking-[0.05em]">{title}</h3>
+            <p className="mt-2 text-xs leading-5 text-white/42">{text}</p>
           </article>
         ))}
-      </div>
-
-      <div className="mt-4 flex flex-col gap-3 rounded-xl border gsi-border bg-blue-950/30 p-4 text-sm sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-3">
-          <Users className="shrink-0 text-lime-300" size={22} />
-          <span>Similar to how GDP measures economic health, GSI measures soil health.</span>
-        </div>
-
-        <span className="font-semibold text-lime-300">
-          Learn more about our methodology →
-        </span>
       </div>
     </section>
   );
