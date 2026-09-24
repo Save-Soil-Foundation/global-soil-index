@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { pageMetadata, SITE_URL } from "@/lib/seo";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import { Footer } from "@/components/Footer";
 import { Sidebar } from "@/components/Sidebar";
 import "./globals.css";
@@ -28,6 +29,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-2WFG7HPR82"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-2WFG7HPR82');`}
+        </Script>
         <div className="flex min-h-screen flex-col bg-[#0b1114] text-[#f4f5f4]">
           <Sidebar />
           <div className="flex-1">{children}</div>
