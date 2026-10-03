@@ -1,5 +1,6 @@
 import { pageMetadata } from "@/lib/seo";
-import { Braces, Code2, Database, KeyRound, ServerCrash } from "lucide-react";
+import { PageEarthStrip } from "@/components/PageEarthStrip";
+import { Code2, Database, KeyRound, ServerCrash } from "lucide-react";
 import { getSoilDataProvider } from "@/lib/soil-data";
 
 export const metadata = pageMetadata(
@@ -44,22 +45,16 @@ export default async function DataApiPage() {
   ]);
 
   return (
-    <main className="mx-auto min-h-[calc(100vh-96px)] max-w-[1200px] px-5 py-8 sm:px-8 lg:px-[34px] lg:py-10">
-      <header className="border-b border-white/10 pb-8">
-        <div className="flex size-11 items-center justify-center rounded-md border border-[#8cbf60]/35 text-[#8cbf60]">
-          <Braces size={21} />
-        </div>
-        <p className="gsi-kicker mt-6">Data API</p>
-        <h1 className="mt-3 max-w-4xl text-4xl font-light uppercase leading-[1.05] sm:text-5xl">
-          Soil intelligence, built to travel.
-        </h1>
-        <p className="mt-5 max-w-3xl text-sm leading-6 text-white/48">
-          This page documents the proposed API contract the frontend is prepared
-          to consume. It does not expose functioning production endpoints yet.
-        </p>
-      </header>
+    <main className="min-h-[calc(100vh-96px)] px-5 pb-8 pt-5 sm:px-8 lg:px-[34px] lg:pt-6">
+      <PageEarthStrip
+        eyebrow="Data API"
+        title="Soil intelligence, built to travel."
+        description="A proposed API contract for the data the frontend is prepared to consume. Production endpoints are not yet available."
+        panelLabel="API contract"
+        panelItems={[["Country", "Profiles"], ["Index", "Summary"], ["Indicator", "Catalog"], ["Ticker", "Feed"]]}
+      />
 
-      <section className="mt-8 rounded-md border border-[#8cbf60]/20 bg-[#8cbf60]/8 p-5">
+      <section className="rounded-md border border-[#8cbf60]/20 bg-[#8cbf60]/8 p-5">
         <div className="flex items-start gap-3">
           <Database size={18} className="mt-0.5 text-[#8cbf60]" />
           <div>

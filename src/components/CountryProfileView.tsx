@@ -1,9 +1,8 @@
 import Link from "next/link";
 import { ArrowLeft, Database, ShieldCheck } from "lucide-react";
 import type { CSSProperties } from "react";
-import { CountryFlag } from "@/components/CountryFlag";
+import { PageEarthStrip } from "@/components/PageEarthStrip";
 import { SectionHeader } from "@/components/SectionHeader";
-import { StatCard } from "@/components/StatCard";
 import type { CountryHistoryPoint, CountryProfile, SoilIndicatorValue } from "@/lib/soil-types";
 import { cn } from "@/lib/utils";
 
@@ -97,60 +96,26 @@ export function CountryProfileView({ profile }: CountryProfileViewProps) {
   const historicalChangePositive = (country.historicalChange ?? 0) >= 0;
 
   return (
-    <main className="gsi-animate-page mx-auto min-h-[calc(100vh-96px)] max-w-[1400px] px-5 py-8 sm:px-8 lg:px-[34px] lg:py-10">
-      <Link
-        href="/"
-        className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-white/44 transition hover:text-[#8cbf60]"
+    <main className="gsi-animate-page min-h-[calc(100vh-96px)] px-5 pb-8 pt-5 sm:px-8 lg:px-[34px] lg:pt-6">
+      <PageEarthStrip
+        eyebrow={country.region}
+        title={`${country.name} soil health profile.`}
+        description={country.sourceSummary}
+        panelLabel="Country profile"
+        panelItems={[
+          ["Rank", country.rank === null ? "N/A" : `#${country.rank}`],
+          ["Score", formatValue(country.score)],
+          ["Daily", country.scoreChange === null ? "N/A" : `${scoreChangePositive ? "+" : ""}${country.scoreChange.toFixed(1)}`],
+          ["History", country.historicalChange === null ? "N/A" : `${historicalChangePositive ? "+" : ""}${country.historicalChange.toFixed(1)}`],
+        ]}
       >
-        <ArrowLeft size={14} /> Rankings
-      </Link>
-
-      <header className="gsi-animate-panel mt-7 grid gap-6 border-b border-white/10 pb-8 lg:grid-cols-[1fr_auto] lg:items-end">
-        <div className="flex flex-col gap-4 min-[420px]:flex-row min-[420px]:items-start min-[420px]:gap-5">
-          <CountryFlag country={country} width={74} height={48} priority />
-          <div className="min-w-0">
-            <p className="gsi-kicker">{country.region}</p>
-            <h1 className="mt-2 text-3xl font-light uppercase leading-none text-white sm:text-5xl">
-              {country.name}
-            </h1>
-            <p className="mt-3 max-w-2xl text-sm leading-6 text-white/46">
-              {country.sourceSummary}
-            </p>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:min-w-[520px]">
-          {[
-            ["Rank", country.rank === null ? "NA" : `#${country.rank}`, "success"],
-            ["Score", formatValue(country.score), "default"],
-            [
-              "Vs yesterday",
-              country.scoreChange === null
-                ? "N/A"
-                : `${scoreChangePositive ? "+" : ""}${country.scoreChange.toFixed(1)}`,
-              scoreChangePositive ? "success" : "danger",
-            ],
-            [
-              "Historical",
-              country.historicalChange === null
-                ? "N/A"
-                : `${historicalChangePositive ? "+" : ""}${country.historicalChange.toFixed(1)}`,
-              historicalChangePositive ? "success" : "danger",
-            ],
-          ].map(([label, value, tone], index) => (
-            <div
-              key={label}
-              style={{ "--gsi-index": index } as CSSProperties}
-            >
-              <StatCard
-                label={label}
-                value={value}
-                tone={tone as "default" | "success" | "danger"}
-              />
-            </div>
-          ))}
-        </div>
-      </header>
+        <Link
+          href="/"
+          className="mt-3 inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-white/60 transition hover:text-[#8cbf60]"
+        >
+          <ArrowLeft size={14} /> Rankings
+        </Link>
+      </PageEarthStrip>
 
       <section className="mt-8 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
         <div>

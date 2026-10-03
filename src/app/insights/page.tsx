@@ -1,4 +1,5 @@
 import { pageMetadata } from "@/lib/seo";
+import { PageEarthStrip } from "@/components/PageEarthStrip";
 import Link from "next/link";
 import { ArrowDownRight, ArrowUpRight, Database, LineChart } from "lucide-react";
 import { CountryFlag } from "@/components/CountryFlag";
@@ -38,20 +39,16 @@ export default async function InsightsPage() {
   );
 
   return (
-    <main className="mx-auto min-h-[calc(100vh-96px)] max-w-[1400px] px-5 py-8 sm:px-8 lg:px-[34px] lg:py-10">
-      <header className="border-b border-white/10 pb-8">
-        <p className="gsi-kicker">Insights</p>
-        <h1 className="mt-3 max-w-4xl text-4xl font-light uppercase leading-[1.05] sm:text-5xl">
-          Signals behind the scores.
-        </h1>
-        <p className="mt-5 max-w-3xl text-sm leading-6 text-white/48">
-          Prototype global statistics, country comparisons, available historical
-          trends, regional comparisons, and research update surfaces powered by
-          the shared data provider.
-        </p>
-      </header>
+    <main className="min-h-[calc(100vh-96px)] px-5 pb-8 pt-5 sm:px-8 lg:px-[34px] lg:pt-6">
+      <PageEarthStrip
+        eyebrow="Insights"
+        title="Signals behind the scores."
+        description="Global statistics, country comparisons, historical trends, regional patterns, and research updates."
+        panelLabel="Insight surfaces"
+        panelItems={[["Global", "Signals"], ["Country", "Views"], ["Regional", "Patterns"], ["Research", "Updates"]]}
+      />
 
-      <section className="mt-8 grid border-y border-white/10 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="grid border-b border-white/10 sm:grid-cols-2 lg:grid-cols-4">
         {[
           ["Global average", summary.averageScore?.toFixed(1) ?? "N/A", "out of 100"],
           ["Complete data", summary.completeDataCount.toString(), "prototype countries"],

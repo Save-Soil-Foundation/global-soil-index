@@ -1,4 +1,5 @@
 import { pageMetadata } from "@/lib/seo";
+import { PageEarthStrip } from "@/components/PageEarthStrip";
 import { Eye, Scale, ShieldCheck, Users } from "lucide-react";
 import { getSoilDataProvider } from "@/lib/soil-data";
 
@@ -39,20 +40,16 @@ export default async function AboutPage() {
   ]);
 
   return (
-    <main className="mx-auto min-h-[calc(100vh-96px)] max-w-[1400px] px-5 py-8 sm:px-8 lg:px-[34px] lg:py-10">
-      <header className="border-b border-white/10 pb-8">
-        <p className="gsi-kicker">About the index</p>
-        <h1 className="mt-3 max-w-5xl text-4xl font-light uppercase leading-[1.05] sm:text-5xl">
-          Soil health should be visible, comparable, and impossible to ignore.
-        </h1>
-        <p className="mt-5 max-w-3xl text-sm leading-6 text-white/48">
-          The Global Soil Index frontend is being prepared as a public-facing
-          intelligence dashboard for rankings, profiles, spatial exploration,
-          methodology, and future API access.
-        </p>
-      </header>
+    <main className="min-h-[calc(100vh-96px)] px-5 pb-8 pt-5 sm:px-8 lg:px-[34px] lg:pt-6">
+      <PageEarthStrip
+        eyebrow="About the index"
+        title="Soil health should be visible, comparable, and impossible to ignore."
+        description="Public-facing intelligence for rankings, profiles, spatial exploration, methodology, and future API access."
+        panelLabel="Index principles"
+        panelItems={[["Open", "Sources"], ["Comparable", "Signals"], ["Responsible", "Use"], ["Collaborative", "Design"]]}
+      />
 
-      <section className="mt-8 grid gap-8 border-y border-white/10 py-8 lg:grid-cols-[0.8fr_1.2fr]">
+      <section className="grid gap-8 border-b border-white/10 py-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
           <p className="gsi-kicker">Purpose</p>
           <h2 className="mt-3 text-2xl font-light uppercase">Measure what sustains us.</h2>

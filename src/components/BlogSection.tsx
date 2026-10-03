@@ -32,7 +32,7 @@ const posts = [
 
 export function BlogSection() {
   return (
-    <section className="gsi-animate-panel mt-6 border-y border-white/10 py-6 sm:mt-7 sm:py-7">
+    <section className="gsi-animate-panel border-b border-white/10 py-6 sm:py-7">
       <SectionHeader
         eyebrow="Blog"
         title="Soil health explainers and index updates."

@@ -16,14 +16,14 @@ export type VerificationStatus =
 
 export type SoilIndicatorId =
   | "organic-carbon"
-  | "erosion-risk"
   | "vegetation-cover"
   | "nutrient-balance"
   | "soil-moisture"
   | "compaction-pressure"
   | "salinity-stress"
   | "soil-biodiversity"
-  | "policy-readiness";
+  | "policy-readiness"
+  | "crop-productivity";
 
 export type SoilIndicatorDefinition = {
   id: SoilIndicatorId;
@@ -31,6 +31,7 @@ export type SoilIndicatorDefinition = {
   description: string;
   unit: string;
   sourceType: string;
+  hyperspectralRole?: string;
 };
 
 export type SoilIndicatorValue = SoilIndicatorDefinition & {

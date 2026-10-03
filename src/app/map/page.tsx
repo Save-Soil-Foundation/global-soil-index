@@ -1,4 +1,5 @@
 import { pageMetadata } from "@/lib/seo";
+import { PageEarthStrip } from "@/components/PageEarthStrip";
 import { InteractiveSoilMap } from "@/components/InteractiveSoilMap";
 import { getSoilDataProvider } from "@/lib/soil-data";
 
@@ -17,22 +18,14 @@ export default async function MapPage() {
   ]);
 
   return (
-    <main className="mx-auto min-h-[calc(100vh-96px)] max-w-[1600px] px-5 py-8 sm:px-8 lg:px-[34px] lg:py-10">
-      <header className="flex flex-col gap-5 border-b border-white/10 pb-8 lg:flex-row lg:items-end lg:justify-between">
-        <div>
-          <p className="gsi-kicker">Spatial intelligence</p>
-          <h1 className="mt-3 max-w-4xl text-4xl font-light uppercase leading-[1.05] sm:text-5xl">
-            Global soil health map.
-          </h1>
-          <p className="mt-5 max-w-2xl text-sm leading-6 text-white/48">
-            A functional local map layer for country selection, regional filtering,
-            profile navigation, and missing-data states while the production soil API is pending.
-          </p>
-        </div>
-        <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.08em] text-white/36">
-          <span className="size-2 rounded-full bg-[#8cbf60]" /> {metadata.statusLabel}
-        </div>
-      </header>
+    <main className="min-h-[calc(100vh-96px)] px-5 pb-8 pt-5 sm:px-8 lg:px-[34px] lg:pt-6">
+      <PageEarthStrip
+        eyebrow="Spatial intelligence"
+        title="Global soil health map."
+        description="Country selection, regional filtering, profile navigation, and data-availability context in one map view."
+        panelLabel={metadata.statusLabel}
+        panelItems={[["Country", "Selection"], ["Regional", "Filters"], ["Profile", "Links"], ["Data", "Context"]]}
+      />
 
       <InteractiveSoilMap countries={countries} />
 
