@@ -19,6 +19,10 @@ export const metadata: Metadata = {
   ),
   applicationName: "Soil Index",
   keywords: ["Soil Index", "Global Soil Index", "soil health", "soil health indicators", "soil data", "soil degradation"],
+  icons: {
+    icon: [{ url: "/icon.png", type: "image/png" }],
+    apple: [{ url: "/apple-icon.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({
