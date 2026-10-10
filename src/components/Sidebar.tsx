@@ -2,14 +2,11 @@
 
 import {
   BarChart3,
-  BookOpen,
   Braces,
   ChevronRight,
   Globe2,
-  Handshake,
   Info,
   Layers3,
-  LineChart,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -33,9 +30,6 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { label: "Rankings", href: "/", icon: BarChart3 },
   { label: "Methodology", href: "/methodology", icon: Layers3 },
-  { label: "Insights", href: "/insights", icon: LineChart },
-  { label: "Blog", href: "/blog", icon: BookOpen },
-  { label: "Partnerships", href: "/partnerships", icon: Handshake },
   { label: "About", href: "/about", icon: Info },
 ];
 

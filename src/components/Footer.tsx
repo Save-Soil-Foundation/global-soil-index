@@ -8,9 +8,6 @@ import { datasetMetadata } from "@/data/countries";
 const footerLinks = [
   { label: "Rankings", href: "/" },
   { label: "Methodology", href: "/methodology" },
-  { label: "Insights", href: "/insights" },
-  { label: "Blog", href: "/blog" },
-  { label: "Partnerships", href: "/partnerships" },
   { label: "Soil map", href: "/map" },
   { label: "About", href: "/about" },
 ];

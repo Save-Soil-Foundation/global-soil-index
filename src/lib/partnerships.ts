@@ -25,9 +25,9 @@ export const partnershipTracks = [
     status: "Outreach",
     logos: [
       {
-        partnerId: "save-soil-foundation",
+        partnerId: "save-soil-campaign",
         name: "Save Soil Foundation",
-        src: "/assets/logos/civil-society/save-soil-foundation.png",
+        src: "/assets/logos/civil-society/save-soil-campaign.png",
         className: "size-14",
       },
       {

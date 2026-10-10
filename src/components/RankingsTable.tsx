@@ -202,11 +202,11 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
       <div className="flex min-w-0 flex-col gap-3">
         <div className="min-w-0">
           <h1 className="gsi-display text-[24px] leading-[1.08] text-white min-[380px]:text-[26px] sm:text-[30px] lg:text-[31px] xl:text-[33px]">
-            Explore{" "}
-            <span className="text-[#8cbf60]">the world&apos;s soil health</span>
+            Soil Index:{" "}
+            <span className="text-[#8cbf60]">global soil health rankings</span>
           </h1>
           <p className="mt-1 text-[13px] text-white/48 sm:mt-1.5 sm:text-sm">
-            {metadata.countryCount} Countries. 1 Global Index.
+            {metadata.countryCount} Countries. 1 Global Index. Prototype rankings.
           </p>
         </div>
 
