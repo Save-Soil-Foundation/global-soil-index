@@ -1,11 +1,12 @@
+import Link from "next/link";
 import { pageMetadata } from "@/lib/seo";
 import { PageEarthStrip } from "@/components/PageEarthStrip";
 import { InteractiveSoilMap } from "@/components/InteractiveSoilMap";
 import { getSoilDataProvider } from "@/lib/soil-data";
 
 export const metadata = pageMetadata(
-  "Soil Health Map | Soil Index",
-  "Explore prototype spatial patterns in global soil health and resilience.",
+  "Global Soil Health Map | Soil Index",
+  "Explore the Soil Index world map, browse country profiles, and view regional context. Current scores are demonstration data, not verified measurements.",
   "/map"
 );
 
@@ -47,6 +48,11 @@ export default async function MapPage() {
           </article>
         ))}
       </section>
+      <nav aria-label="Explore Soil Index" className="mt-8 flex flex-wrap gap-x-6 gap-y-3 border-t border-white/10 pt-5 text-sm text-[#a7d87d]">
+        <Link href="/">Global rankings</Link>
+        <Link href="/#rankings">Country profiles</Link>
+        <Link href="/methodology">Methodology & limitations</Link>
+      </nav>
     </main>
   );
 }

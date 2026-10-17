@@ -1,6 +1,6 @@
 "use client";
 
-import { Filter, Search, X } from "lucide-react";
+import { ChevronDown, Filter, Search, X } from "lucide-react";
 import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import { GlobalSoilPulse } from "@/components/GlobalSoilPulse";
@@ -15,6 +15,8 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
+  SelectLabel,
   SelectItem,
   SelectTrigger,
   SelectValue,
@@ -27,6 +29,7 @@ import type {
   SoilTickerItem,
 } from "@/lib/soil-types";
 import { cn } from "@/lib/utils";
+import { countryGroups, matchesCountryGroup, type CountryGroup } from "@/lib/country-groups";
 
 type SortOption = "rank" | "score" | "name" | "historical-change";
 type ScoreRange = "all" | "70-plus" | "50-69" | "30-49" | "0-29";
@@ -120,6 +123,8 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
 
   const [search, setSearch] = useState("");
   const [sortBy, setSortBy] = useState<SortOption>("rank");
+  const [showAllCountries, setShowAllCountries] = useState(false);
+  const [countryGroup, setCountryGroup] = useState<CountryGroup>("all");
   const [region, setRegion] = useState<"all" | CountryRegion>("all");
   const [scoreRange, setScoreRange] = useState<ScoreRange>("all");
   const [rankRange, setRankRange] = useState<RankRange>("all");
@@ -133,11 +138,13 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
     Number(availability !== "all");
 
   const query = search.trim().toLowerCase();
-  const defaultVisualMode = !query && activeFilterCount === 0 && sortBy === "rank";
+  const hasActiveFilters = activeFilterCount > 0 || countryGroup !== "all";
+  const defaultVisualMode = !query && !hasActiveFilters && sortBy === "rank";
 
   const visibleCountries = useMemo(() => {
     const filtered = rankings.filter((country) => {
       const matchesQuery = !query || country.name.toLowerCase().includes(query);
+      const matchesGroup = matchesCountryGroup(country, countryGroup);
       const matchesRegion = region === "all" || country.region === region;
       const matchesScore = scoreInRange(country.score, scoreRange);
       const matchesRank = rankInRange(country.rank, rankRange);
@@ -146,6 +153,7 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
 
       return (
         matchesQuery &&
+        matchesGroup &&
         matchesRegion &&
         matchesScore &&
         matchesRank &&
@@ -172,6 +180,7 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
       return compareNullableNumbers(left.rank, right.rank, "asc");
     });
   }, [
+    countryGroup,
     availability,
     defaultVisualMode,
     query,
@@ -182,11 +191,19 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
     sortBy,
   ]);
 
+  // Keep every profile in the initial HTML without extending the default grid.
+  const remainingCountries = defaultVisualMode
+    ? rankings
+        .filter((country) => !country.featuredOrder)
+        .sort((left, right) => compareNullableNumbers(left.rank, right.rank, "asc"))
+    : [];
+
   function clearSearch() {
     setSearch("");
   }
 
   function clearFilters() {
+    setCountryGroup("all");
     setRegion("all");
     setScoreRange("all");
     setRankRange("all");
@@ -357,7 +374,7 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
               <div className="flex items-center justify-between gap-3 border-t border-white/10 bg-black/10 px-5 py-4">
                 <Button
                   onClick={clearFilters}
-                  disabled={activeFilterCount === 0}
+                  disabled={!hasActiveFilters}
                   variant="ghost"
                   size="sm"
                 >
@@ -378,18 +395,18 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
         </div>
       </div>
 
-      <div className="mt-3.5 flex flex-wrap items-center gap-x-4 gap-y-2 sm:mt-4 sm:gap-5">
-        <div className="text-[12px] font-bold uppercase tracking-[0.05em] text-[#8cbf60]">
-          {metadata.countryCount} Countries
+      <div className="gsi-rankings-toolbar mt-3.5 grid grid-cols-[auto_minmax(0,1fr)_minmax(0,1fr)] items-center gap-x-2 gap-y-2 sm:mt-4 sm:flex sm:flex-wrap sm:gap-5">
+        <div className="text-[12px] font-semibold whitespace-nowrap uppercase tracking-normal text-[#8cbf60] sm:tracking-[0.05em]">
+          {defaultVisualMode ? metadata.countryCount : visibleCountries.length} Countries
         </div>
 
         <Select value={sortBy} onValueChange={(value) => setSortBy(value as SortOption)}>
           <SelectTrigger
-            className="h-auto w-auto gap-1 border-0 bg-transparent p-0 text-[12px] font-semibold uppercase tracking-[0.05em] text-white/44 shadow-none hover:text-white/70 focus:ring-0"
+            className="h-auto min-h-8 min-w-0 w-full justify-start gap-1 border-0 bg-transparent p-0 text-[12px] font-semibold uppercase tracking-normal text-white/44 sm:w-auto sm:tracking-[0.05em] shadow-none hover:text-white/70 focus:ring-0"
             aria-label="Sort countries"
           >
-            <span className="text-white/42">Sort by:</span>
-            <span className="text-[#8cbf60]">{sortLabels[sortBy]}</span>
+            <span className="shrink-0 text-white/42"><span className="sm:hidden">Sort:</span><span className="hidden sm:inline">Sort by:</span></span>
+            <span className="truncate text-[#8cbf60]">{sortLabels[sortBy]}</span>
           </SelectTrigger>
           <SelectContent align="start">
             <SelectItem value="rank">{sortLabels.rank}</SelectItem>
@@ -399,8 +416,33 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
           </SelectContent>
         </Select>
 
+        <Select value={countryGroup} onValueChange={(value) => setCountryGroup(value as CountryGroup)}>
+          <SelectTrigger
+            className="h-auto min-h-8 min-w-0 w-full justify-start gap-1 border-0 bg-transparent p-0 text-[12px] font-semibold uppercase tracking-normal text-white/44 sm:w-auto sm:tracking-[0.05em] shadow-none hover:text-white/70 focus:ring-0"
+            aria-label="Regions and country groups"
+          >
+            <span className="hidden shrink-0 text-white/42 sm:inline">Regions &amp; groups:</span>
+            <span className="truncate text-[#8cbf60]">{countryGroup === "all" ? "All countries" : countryGroups[countryGroup].label}</span>
+          </SelectTrigger>
+          <SelectContent align="start">
+            <SelectItem value="all">All countries</SelectItem>
+            <SelectGroup>
+              <SelectLabel>Country groups</SelectLabel>
+              {(["g7", "g20", "brics", "eu"] as const).map((key) => (
+                <SelectItem key={key} value={key}>{countryGroups[key].label}</SelectItem>
+              ))}
+            </SelectGroup>
+            <SelectGroup>
+              <SelectLabel>Continents &amp; regions</SelectLabel>
+              {(["africa", "asia", "europe", "north-america", "south-america", "oceania", "apac"] as const).map((key) => (
+                <SelectItem key={key} value={key}>{countryGroups[key].label}{key === "apac" ? " (Asia + Oceania)" : ""}</SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
+
         {!defaultVisualMode ? (
-          <p className="text-[11px] text-white/34" aria-live="polite">
+          <p className="col-span-3 text-[11px] text-white/34" aria-live="polite">
             Showing {visibleCountries.length} matching countries
           </p>
         ) : null}
@@ -410,11 +452,37 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
         <GlobalSoilTicker items={tickerItems} metadata={metadata} />
       </div>
 
-      <div className="mt-3 grid grid-cols-2 gap-[7px] min-[520px]:grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10">
+      <div id="country-rankings-grid" className="mt-3 grid grid-cols-2 gap-[7px] min-[520px]:grid-cols-3 sm:grid-cols-3 md:grid-cols-5 lg:grid-cols-8 xl:grid-cols-10">
         {visibleCountries.map((country, index) => (
           <CountryRankCard key={country.slug} country={country} index={index} />
         ))}
+        {/* Keep the remaining profile links in the initial HTML for discovery. */}
+        <div className={showAllCountries ? "contents" : "hidden"}>
+          {remainingCountries.map((country, index) => (
+            <CountryRankCard key={country.slug} country={country} index={index + visibleCountries.length} />
+          ))}
+        </div>
       </div>
+
+      {remainingCountries.length > 0 ? (
+        <button
+          type="button"
+          aria-expanded={showAllCountries}
+          aria-controls="country-rankings-grid"
+          onClick={(event) => {
+            const button = event.currentTarget;
+            setShowAllCountries(!showAllCountries);
+            if (showAllCountries) {
+              // Keep the collapse control in view after the long list shrinks.
+              requestAnimationFrame(() => button.scrollIntoView({ block: "nearest" }));
+            }
+          }}
+          className="gsi-countries-toggle mx-auto mt-4 flex min-h-10 w-fit cursor-pointer items-center justify-center gap-2 rounded-full border border-white/18 bg-[#0f171a] px-4 py-2 text-xs font-semibold text-white/74 transition hover:border-[#8cbf60]/55 hover:text-[#b8df8a] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#98d75d]"
+        >
+          {showAllCountries ? "Show fewer countries" : `Show all ${rankings.length} countries`}
+          <ChevronDown size={15} aria-hidden="true" className={cn("transition-transform motion-reduce:transition-none", showAllCountries && "rotate-180")} />
+        </button>
+      ) : null}
 
       {visibleCountries.length === 0 ? (
         <div className="mt-3 rounded-md border border-white/10 bg-[#11191c] px-4 py-14 text-center">
@@ -428,7 +496,7 @@ export function RankingsTable({ rankings, metadata, tickerItems }: RankingsTable
                 Clear search
               </Button>
             ) : null}
-            {activeFilterCount > 0 ? (
+            {hasActiveFilters ? (
               <Button onClick={clearFilters} variant="secondary" size="sm" className="rounded-full">
                 Clear filters
               </Button>

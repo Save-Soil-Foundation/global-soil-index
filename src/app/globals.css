@@ -263,3 +263,10 @@ select:focus-visible {
   }
 }
 
+
+/* Keep toolbar button type aligned with its adjacent country count. */
+.gsi-rankings-toolbar button[role="combobox"],
+.gsi-countries-toggle {
+  font-size: 12px;
+  font-weight: 600;
+}

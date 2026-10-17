@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getSoilDataProvider } from "@/lib/soil-data";
 import { ChevronDown, Eye, Scale, ShieldCheck, Users } from "lucide-react";
 import { pageMetadata } from "@/lib/seo";
 import { PageEarthStrip } from "@/components/PageEarthStrip";
@@ -6,7 +7,7 @@ import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export const metadata = pageMetadata(
-  "About | Soil Index",
+  "About Soil Index | Mission & Soil Health Intelligence",
   "Our mission is to make soil health visible, understandable, and actionable. Explore the purpose, principles, and development of Soil Index.",
   "/about"
 );
@@ -24,7 +25,8 @@ const audiences = [
   ["People & communities", "A clearer way to learn about soil and advocate for its protection."],
 ];
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const { countryCount } = await getSoilDataProvider().getMetadata();
   return (
     <main className="min-h-[calc(100vh-96px)] px-5 pb-8 pt-5 sm:px-8 lg:px-[34px] lg:pt-6">
       <PageEarthStrip
@@ -39,6 +41,19 @@ export default function AboutPage() {
           <Link href="/methodology" className={cn(buttonVariants({ variant: "outline", size: "sm" }), "rounded-full")}>Explore our methodology</Link>
         </div>
       </PageEarthStrip>
+
+        <section aria-labelledby="soil-index-explained" className="grid gap-8 border-b border-white/10 py-8 lg:grid-cols-[0.8fr_1.2fr]">
+          <div>
+            <p className="gsi-kicker">Understanding Soil Index</p>
+            <h2 id="soil-index-explained" className="mt-3 text-2xl font-light uppercase">What is Soil Index?</h2>
+            <p className="mt-4 text-sm leading-6 text-white/46">Soil Index is a platform in development that aims to make soil health visible, understandable, and actionable through country profiles, maps, and global comparisons.</p>
+            <Link href="/#rankings" className="mt-4 inline-block text-sm text-[#a7d87d] underline-offset-4 hover:underline">Browse country profiles →</Link>
+          </div>
+          <div className="space-y-5">
+            <div><h3 className="text-xs font-semibold uppercase tracking-[0.06em]">How to explore the rankings</h3><p className="mt-2 text-sm leading-6 text-white/46">Search for a country, filter by region, or open a country profile to explore its indicators and data-quality notes. The initial view highlights selected countries; search and filters cover all {countryCount} countries.</p></div>
+            <div><h3 className="text-xs font-semibold uppercase tracking-[0.06em]">Are these verified soil-health rankings?</h3><p className="mt-2 text-sm leading-6 text-white/68">The current rankings and scores are demonstration data for developing the platform. They are not verified scientific measurements and should not be used to make policy, investment, or land-management decisions.</p><Link href="/methodology" className="mt-3 inline-block text-sm text-[#a7d87d] underline-offset-4 hover:underline">Read the methodology and limitations →</Link></div>
+          </div>
+        </section>
 
       <section id="purpose" aria-labelledby="purpose-title" className="grid scroll-mt-28 gap-8 border-b border-white/10 py-8 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
